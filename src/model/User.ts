@@ -16,3 +16,53 @@ const MessageSchema: Schema <Message> = new Schema({
         default: Date.now
     }
 })
+
+export interface User extends Document {
+    username: string;
+    email: string;
+    password:string;
+    verifiedCode:string;
+    verifiedCodeExpiry:Date;
+    isVerified:boolean;
+    isAcceptingMessages:boolean;
+    messages:Message[];
+}
+const UserSchema: Schema <User> = new Schema({
+    username:{
+        type: String,
+        required: [true, "Username is required"],
+        trim: true,
+        unique: true
+    },
+    email:{
+        type: String,
+        required: [true, "Email is required"],
+        unique: true,
+        match:[/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g,"Email is not valid"]
+    },
+    password:{
+        type: String,
+        required: [true, "Password is required"]
+    },
+    verifiedCode:{
+        type: String,
+        required: [true, "Code is required"]
+    },
+    isVerified:{
+        type: Boolean,
+        default: false
+    },
+    verifiedCodeExpiry:{
+        type: Date,
+        required: true
+    },
+    isAcceptingMessages:{
+        type: Boolean,
+        default: true
+    },
+    messages: [MessageSchema]
+})
+
+const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema);
+
+export default UserModel;
