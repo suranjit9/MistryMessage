@@ -12,8 +12,20 @@ export async function middleware(request: NextRequest) {
         url.pathname.startsWith("/verify")||
         url.pathname.startsWith("/")
     ))
-return NextResponse.redirect(new URL('/home', request.url))
+
+    // redirect them to the home page if the user is logged in
+    {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
+    if(!token && (
+        url.pathname.startsWith("/dashboard")
+    ))
+    {
+        return NextResponse.redirect(new URL('/sign-in', request.url))
+    }
+return NextResponse.next();
 }
+// export default middleware
 
 // See "Matching Paths" below to learn more
 export const config = {

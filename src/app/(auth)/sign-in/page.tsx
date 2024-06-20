@@ -12,9 +12,11 @@ export default function Component() {
     );
   }
   return (
-    <>
+    <div className="flex w-screen h-screen flex-col items-center justify-center">
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+      <button className="text-red-500 p-4 bg-red-800" onClick={() => signIn()}>
+        Sign in
+      </button>
+    </div>
   );
 }
