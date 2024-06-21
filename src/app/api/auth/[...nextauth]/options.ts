@@ -6,6 +6,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 
 export const authOption : NextAuthOptions={
+    
     providers:[
         CredentialsProvider(
             {
@@ -73,3 +74,6 @@ export const authOption : NextAuthOptions={
     },
     secret:process.env.NEXTAURH_SECRET, 
 }
+
+
+
